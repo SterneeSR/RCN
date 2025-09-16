@@ -182,6 +182,9 @@ STATIC_ROOT = BASE_DIR / "staticfiles"          # for collectstatic in prod
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # --- Email Settings ---
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
