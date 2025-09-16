@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-CSRF_TRUSTED_ORIGINS = ['https://rcn-production-31b5.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://raise-nanobiotech.up.railway.app']
 
 # Load environment variables from .env file
 load_dotenv()
@@ -36,10 +36,10 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 # DEBUG = True
 
 if not DEBUG:
-    CSRF_TRUSTED_ORIGINS = ['https://rcn-production-31b5.up.railway.app'] # Railway domain
+    CSRF_TRUSTED_ORIGINS = ['https://raise-nanobiotech.up.railway.app'] # Railway domain
 
 ALLOWED_HOSTS = [
-    'rcn-production-31b5.up.railway.app',
+    'raise-nanobiotech.up.railway.app',
     'localhost',
     '127.0.0.1',
 ]
