@@ -30,7 +30,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG mode is for development. Should be False in production.
 # The value is read from the environment variable 'DEBUG'.
 # A default of 'False' is used if the variable isn't set.
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+# DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+DEBUG = True
 
 # ALLOWED_HOSTS is a list of trusted hostnames for the Django project.
 ALLOWED_HOSTS = [
