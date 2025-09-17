@@ -40,7 +40,10 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 # CSRF_TRUSTED_ORIGINS is a list of trusted origins for CSRF protection.
-CSRF_TRUSTED_ORIGINS = ['https://raise-nanobiotech.up.railway.app']
+CSRF_TRUSTED_ORIGINS = [
+    'https://raise-nanobiotech.up.railway.app',
+    'http://raise-nanobiotech.up.railway.app'
+]
 
 # --- Application and Middleware ---
 INSTALLED_APPS = [
@@ -98,12 +101,14 @@ WSGI_APPLICATION = 'rcnb.wsgi.application'
 # --- Database Configuration ---
 # Use dj_database_url to configure the database from the DATABASE_URL environment variable.
 DATABASES = {
-    'default': dj_database_url.config(
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
         conn_max_age=600,
         conn_health_checks=True,
         ssl_require=not DEBUG,
     )
 }
+
 
 # --- Password Validation ---
 AUTH_PASSWORD_VALIDATORS = [
@@ -129,11 +134,12 @@ USE_TZ = True
 
 # --- Static and Media Files ---
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media files (user-uploaded files)
 MEDIA_URL = "media/"
@@ -157,11 +163,23 @@ LOGIN_REDIRECT_URL = 'products:product_list'
 LOGOUT_REDIRECT_URL = 'users:login'
 
 # --- Cloudinary Settings ---
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-#     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-#     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-# }
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
 
 # --- Default Primary Key Field Type ---
-# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG" if DEBUG else "INFO",
+    },
+}
